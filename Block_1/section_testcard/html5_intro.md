@@ -36,7 +36,7 @@ The playground is a place where code snippets can be developed.  Each snippet cr
 
 ### Playground Scene
 
-The default image on the playground site is a sphere floating above a ground plane.  The code displayed with this shows the createScene function.
+The default image on the [playground site](https://playground.babylonjs.com/) is a sphere floating above a ground plane.  The code displayed with this shows the createScene function.
 
 ![default scene](default.png)
 
@@ -75,7 +75,6 @@ var createScene = function () {
     return scene;
 };
 ```
-The documentation takes you through editing the code in playground to show a Yeti on a chequerboard. Give that a try!
 
 However what you are working with in playground is a function which returns a scene.  Where is the function called?  This is useful, but it is not the complete code.  Playground adds in extra code behind the scenes.  This is the fairly repetetive code needed to render the scene.
 
@@ -214,7 +213,13 @@ Download and unzip this file and click on it in the file inspector to check that
 
 ## Developing locally
 
-You can work on BabylonJS using just an editor and a browser drawing all the babylonJS contet in from a content delivery network.  I don't recommend this as a way of working, but you may see reference to this online so it is as well to know what it is.  Review this and then move swiftly on to use vite. To work on babylonJS locally, in javaScript for starters, all this code will be needed.  It is useful to separate the repetetive code and the specific scene code into separate files.  Later a pattern for project organisation will be set up which allows for expansion to larger projects.  For now code is split up into hello.html, top.js, main.js and bottom.js all within a single folder.
+The playground is a useful place to experiment with code snippets, but to develop a project locally you will need to set up a local environment.  This will be done using [vite](https://vitejs.dev/).  Vite is a modern build tool which can be used to set up a local development environment.  It is fast and easy to use.  We will use Vite to set up a typescript environment for babylonJS.
+
+Just for now we can creat a simple html test card to show how babylonJS code can be structured.  This will be replaced later by a vite environment.
+
+You can work on BabylonJS using just an editor and a browser drawing all the babylonJS content in from a content delivery network.  I don't recommend this as a way of working, but it is an easy start up.   
+
+To work on babylonJS locally, in javaScript for starters, all this code will be needed.  It is useful to separate the repetetive code and the specific scene code into separate files.  Later a pattern for project organisation will be set up which allows for expansion to larger projects.  For now code is split up into hello.html, top.js, main.js and bottom.js all within a single folder.
 
 ### hello.html
 
@@ -231,20 +236,7 @@ If you want to edit code in visual studio code you will need to add in the neces
 
         <!-- Babylon.js -->
  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
-        <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
-        <script src="https://cdn.babylonjs.com/ammo.js"></script>
-        <script src="https://cdn.babylonjs.com/cannon.js"></script>
-        <script src="https://cdn.babylonjs.com/Oimo.js"></script>
-        <script src="https://cdn.babylonjs.com/earcut.min.js"></script>
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
-        <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-        <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-        <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
-        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-        <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
-        <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
     
 
         <style>
@@ -547,7 +539,7 @@ The resulting html page is then displayed.  The inspector and scene explorer are
     width="100%" 
     scrolling="no" 
     title="Hello Page" 
-    src="Block_3/section_1/Hello/Hello.html" 
+    src="Block_1/section_testcard/Hello/Hello.html" 
     frameborder="no" 
     loading="lazy" 
     allowtransparency="true" 
