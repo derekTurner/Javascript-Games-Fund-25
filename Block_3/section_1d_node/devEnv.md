@@ -4,20 +4,20 @@ This is an adaptation of the tutorial [Using Vite with Babylon.js](https://doc.b
 
 ## Setting up the environment
 
-Before starting you will need docker desktop installed and running.  Current version is 4.34.2  
+Before starting you will need docker desktop installed and running.  Current version is 4.48.0  
 
 The Help|about tab in Visual Studio Code shows version details.
 
 ```
-Version: 1.94.2 (user setup)
-Commit: 384ff7382de624fb94dbaf6da11977bba1ecd427
-Date: 2024-10-09T16:08:44.566Z
-Electron: 30.5.1
-ElectronBuildId: 10262041
-Chromium: 124.0.6367.243
-Node.js: 20.16.0
-V8: 12.4.254.20-electron.0
-OS: Windows_NT x64 10.0.22631
+Version: 1.105.1 (user setup)
+Commit: 7d842fb85a0275a4a8e4d7e040d2625abbf7f084
+Date: 2025-10-14T22:33:36.618Z
+Electron: 37.6.0
+ElectronBuildId: 12502201
+Chromium: 138.0.7204.251
+Node.js: 22.19.0
+V8: 13.8.258.32-electron.0
+OS: Windows_NT x64 10.0.26100
 ```
 
 Then you will need VScode with the devContainers extension installed.
@@ -118,7 +118,7 @@ The node version can be checked by
 >node -v
 
 ```bash
-v22.2.0
+v22.20.0
 ```
 
 The typescript version is checked by:
@@ -126,7 +126,7 @@ The typescript version is checked by:
 >tsc -v
 
 ```bash
-Version 5.4.5
+Version 5.9.0
 ```
 
 Install vite with

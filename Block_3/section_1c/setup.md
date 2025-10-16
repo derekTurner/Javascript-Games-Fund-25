@@ -48,15 +48,15 @@ Further extensions will be installed to VSC as required.
 
 Windows subsystem for Linux is easy to install on windows version beyond Windows 10 Home Version 21H1
 
-The current system can be found in the windows setting system>about sectyion.  The system used a the time of writing these notes is:
+The current system can be found in the windows setting system>about section.  The system used a the time of writing these notes is:
 ```
-    Edition: 	  Windows 11 Home
+Edition	Windows 11 Home
 
-    Version:	  23H2
+Version	24H2
 
-    OS build:	  22631.4317
+OS build	26100.6899
 
-    Experience:	Windows Feature Experience Pack 1000.22700.1041.0
+Experience	Windows Feature Experience Pack 1000.26100.253.0
 ```
 
 
@@ -79,13 +79,13 @@ If you already have WSL installed you can check the version within powershell
 
 I am currently using
 ```code
-WSL version: 2.3.24.0
-Kernel version: 5.15.153.1-2
-WSLg version: 1.0.65
-MSRDC version: 1.2.5620
+WSL version: 2.6.1.0
+Kernel version: 6.6.87.2-1
+WSLg version: 1.0.66
+MSRDC version: 1.2.6353
 Direct3D version: 1.611.1-81528511
 DXCore version: 10.0.26100.1-240331-1435.ge-release
-Windows version: 10.0.22631.4317
+Windows version: 10.0.26100.6899
 ```
 If your version is older, the version of WSL can be updated by 
 
@@ -100,7 +100,7 @@ As part of WSL you will have ubuntu.  In powershell (as administrator)
 ```code
 No LSB modules are available.
 Distributor ID: Ubuntu
-Description:    Ubuntu 20.04 LTS
+Description:    Ubuntu 20.04.6 LTS
 Release:        20.04
 Codename:       focal
 ```
@@ -115,6 +115,7 @@ At the end of this I see
 > lsb_release -a
 
 ```code
+No LSB modules are available.
 Distributor ID: Ubuntu
 Description:    Ubuntu 20.04.6 LTS
 Release:        20.04
@@ -196,6 +197,10 @@ This message is shown once once a day. To disable it please create the
 derek@TurnerHub:~$
 ```
 Note that you as a named user do not have full privelidges on the system.  This is reserved for the root user.  In general it is preferred not to go in as the root user to protect yourself from causing dabage from an unitentional code error.  If you need to do an operation which requires root privelidges you can use the sudo command.
+
+The exit command will close the ubuntu window.
+
+> exit
 
 Opening powerShell again, you can confirm which version of WSL you have with 
 
@@ -295,7 +300,7 @@ Install docker from [Docker hub](https://docs.docker.com/desktop/install/windows
 
 and install.
 
-Installation runs through (the current version is 4.34.2):
+Installation runs through (the current version is 4.48.0):
 
 ![install docker](installDocker.png)
 
@@ -347,7 +352,7 @@ This is an application which is a convenience utility to help manage the mainten
 Once installed, you can sign into your gitHub account.
 
 ![Github Desktop Login](githubDesktopLogin.png)
-]
+
 
 You will be prompted to allow the desktop to open the github account online where you will be able to enter your login details.
 
@@ -373,11 +378,13 @@ Git is an application which will allow visual studio code to interact with GitHu
 
 Undoubtedly you will decide wheter you prefer to manage your github files from Desktop or VSC, but to have both options available is useful.
 
-The current version is 2.47.0
+The current version is 2.51.0
 
-If you already have an older version of git installed, following these instructions will start by automatically removing it before making the new installation.  Setup will be automatic and you will not need to make menu selections again.
+If you already have an older version of git installed you can update in powershell with:
 
-Download git [here](https://git-scm.com/).  You will find an online book on git here, but you dont need to issue git commands directly if you use VSC.
+> git update-git-for-windows
+
+For a fresh installation, download git [here](https://git-scm.com/).  You will find an online book on git here, but you dont need to issue git commands directly if you use VSC.
 
 ![git logo](git.png)
 
