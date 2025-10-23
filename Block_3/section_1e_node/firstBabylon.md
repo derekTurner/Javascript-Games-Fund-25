@@ -37,7 +37,7 @@ Add the following file named tsconfig.json to babylonProj
 
 
 Comments are not normally used in json files, but may be used with typescript.
-The TSConfig referenc can be found [here](https://www.typescriptlang.org/tsconfig).
+The TSConfig reference can be found [here](https://www.typescriptlang.org/tsconfig).
 
 
 Add this index.html file to babylonProj:
@@ -318,17 +318,26 @@ Issue the build command.
 > testproj@0.0.0 build
 > tsc && vite build
 
-vite v5.3.1 building for production...
-✓ 1696 modules transformed.
-dist/index.html                      0.31 kB │ gzip:     0.22 kB
-dist/assets/index-f6TmYXaZ.css       0.10 kB │ gzip:     0.10 kB
-dist/assets/index-8neby6lM.js   10,179.60 kB │ gzip: 2,473.87 kB
+vite v6.4.1 building for production...
+✓ 2100 modules transformed.
+dist/index.html                                            0.31 kB │ gzip:     0.22 kB
+dist/assets/index-Kkql4ZzK.css                             0.10 kB │ gzip:     0.10 kB
+dist/assets/tgaTextureLoader-D_NLCWfr.js                   0.31 kB │ gzip:     0.26 kB
+dist/assets/hdrTextureLoader-BEDyYo2o.js                   0.53 kB │ gzip:     0.38 kB
+dist/assets/envTextureLoader-cDBrACJr.js                   0.57 kB │ gzip:     0.37 kB
+dist/assets/mesh.vertexData.functions-ayNlGC5K.js          0.96 kB │ gzip:     0.49 kB
+dist/assets/basisTextureLoader-BrfaTx64.js                 1.19 kB │ gzip:     0.57 kB
+dist/assets/ddsTextureLoader-C9KilNHX.js                   1.22 kB │ gzip:     0.59 kB
+dist/assets/ktxTextureLoader-Bvmy40Dg.js                   1.37 kB │ gzip:     0.71 kB
+dist/assets/screenSpaceCurvature.fragment-Cj7slpd7.js      1.60 kB │ gzip:     0.66 kB
+dist/assets/iesTextureLoader-BytIhDVI.js                   2.70 kB │ gzip:     1.17 kB
+dist/assets/index-Br3JtQU7.js                          5,709.24 kB │ gzip: 1,257.52 kB
 
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 53.98s
+✓ built in 21.00s
 ```
 
 There are some configuration files which could be optimised but the build has worked and can be seen in the dist folder.  Before you can uise this you will need to refresh VScodes view of the folder structure.
@@ -351,7 +360,11 @@ The files in the dist folder can now we copied and placed on a web server or int
 
 You don't really need a separate testing server as you have one as live server within VScode.
 
-In vscode us ctrl shift P to reopen the folder locally.  The container is now closed.
+In vscode us ctrl shift P to reopen the folder locally. 
+
+![reopen locally](local.png)
+
+The container is now closed.
 
 So opening just the dist folder in a separate window.
 
@@ -376,7 +389,12 @@ Note that this is now running without a node environment as previewed below.
     allowfullscreen="false">
 </iframe>
 
+Note that the contents of the dist folder are not uploaded to github as they are build files.  However they can be copied to any web server or hosting site to run the application from there.
 
+Save the dist folder locally named as testCard for later reference.  This can be done using windows file explorer to copy the dist folder from the container to a local folder.
+
+## Exercise
+Place the test card folder into a website structure and run it from there.  You may need to adjust paths depending on your structure.
 
 
 

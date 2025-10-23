@@ -52,11 +52,11 @@ Check that the devcontainer file will be saved in the workspace.  That makes the
 
 ![lotcate devcontainer file](devcontainerLocation.png)
 
-On the first time of opening a prompt appears asking what type of container is needed  I chose 'Node & Typescript'
+On the first time of opening a prompt appears asking what type of container is needed. Make sure you can see all the options and then choose 'Node & Typescript'
 
 ![node and typescript](nodeAndTypescript.png)
 
-Then you are asked to choose a node version, I have accepted the default version 20-bullseye.
+Then you are asked to choose a node version, I have accepted the default version 22-bookworm.
 
 ![node 22](bookworm.png)
 
@@ -64,6 +64,9 @@ Then you are asked to choose a node version, I have accepted the default version
 Then you are asked what additional features you need from a large checklist.  I selected none and pressed ok.
 
 ![additional features](addFeatures.png)
+
+Finally you are offered optional files and I have not added any.
+![optional files](optional.png)
 
 If you are asked to trust a file then do so. The system then takes time to create the container image.  
 
@@ -79,7 +82,7 @@ The file structure which has been created in the container is
 
 ![initial file structure](initialFilestructure.png)
 
-This shows the dev.md file which will be available as a place  tpo keep working notes.
+This shows the dev.md file which will be available as a place to keep working notes.
 
 The .devContainer folder contains devcontainer.json which shows that the nature of the container is based on node and typescript.
 
@@ -120,6 +123,7 @@ The node version can be checked by
 ```bash
 v22.20.0
 ```
+If the node version is lower than this by a smalll ammount, say v22.09.0 this should not matter unless you are using very new features.  There is a tool called nvm for node version management which can be used to update node if necessary.
 
 The typescript version is checked by:
 
@@ -128,6 +132,7 @@ The typescript version is checked by:
 ```bash
 Version 5.9.0
 ```
+Likewise if this is lower than 5.9.0 it can be updated using npm but this should not be necessary.
 
 Install vite with
 
@@ -136,34 +141,34 @@ Install vite with
 This led to a comment inviting an update to npm.
 
 ```bash
-added 10 packages in 1m
+added 13 packages in 8s
 
-3 packages are looking for funding
+5 packages are looking for funding
   run `npm fund` for details
 npm notice
-npm notice New minor version of npm available! 10.7.0 -> 10.9.0
-npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.9.0
-npm notice To update run: npm install -g npm@10.9.0
+npm notice New major version of npm available! 10.8.3 -> 11.6.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.2
+npm notice To update run: npm install -g npm@11.6.2
 npm notice
 ```
 
 Folllow any advice to update.
 
-> npm install -g npm@10.9.0
+> npm install -g npm@11.6.2
 
 ```bash
-added 1 package in 7s
+added 1 package in 4s
 
-25 packages are looking for funding
+28 packages are looking for funding
   run `npm fund` for details
 ```
 
-Once the loading process has completed a package.json file is crated in the babylonJSdev folder, this displays the dependancy for Vite.
+Once the loading process has completed a package.json file is created in the babylonJSdev folder, this displays the dependancy for Vite.
 
 ```json
 {
   "dependencies": {
-    "vite": "^5.4.10"
+    "vite": "^6.4.1"
   }
 }
 ```
@@ -175,9 +180,9 @@ Now install babylon core.
 >npm i -D @babylonjs/core
 
 ```bash
-added 2 packages, and audited 13 packages in 24s
+added 2 packages, and audited 16 packages in 25s
 
-3 packages are looking for funding
+5 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
@@ -187,9 +192,9 @@ and also the inspector to make debugging easier.
 >npm i -D @babylonjs/inspector
 
 ```bash
-added 15 packages, and audited 28 packages in 21s
+added 15 packages, and audited 31 packages in 28s
 
-3 packages are looking for funding
+5 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
@@ -200,9 +205,9 @@ Also add the babylon loaders required to handle meshes.
 >npm i -D @babylonjs/loaders
 
 ```bash
-up to date, audited 28 packages in 786ms
+up to date, audited 31 packages in 692ms
 
-3 packages are looking for funding
+5 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
@@ -213,9 +218,9 @@ Finally add the Havok physics engine which is newly introduced to Babylon Versio
 >npm i -D @babylonjs/havok
 
 ```bash
-added 2 packages, and audited 30 packages in 3s
+added 2 packages, and audited 33 packages in 3s
 
-3 packages are looking for funding
+5 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
@@ -226,13 +231,13 @@ When these are completed the package.json file will have been modified to show t
 ```JSON
 {
   "dependencies": {
-    "vite": "^5.4.10"
+    "vite": "^6.4.1"
   },
   "devDependencies": {
-    "@babylonjs/core": "^7.31.0",
+    "@babylonjs/core": "^8.33.0",
     "@babylonjs/havok": "^1.3.10",
-    "@babylonjs/inspector": "^7.31.0",
-    "@babylonjs/loaders": "^7.31.0"
+    "@babylonjs/inspector": "^8.33.0",
+    "@babylonjs/loaders": "^8.33.0"
   }
 }
 ```
@@ -247,8 +252,8 @@ This asks for permission to add packages:
 
 ```bash
 Need to install the following packages:
-create-vite@5.5.4
-Ok to proceed? (y) 
+create-vite@6.5.0
+Ok to proceed? (y)
 ```
 
 > Enter y
@@ -260,38 +265,51 @@ Ok to proceed? (y)
 > change to testProj
 
 ```bash
-? Package name: › testproj
+│
+◆  Project name:
+│  testProj█
+└
 ```
+Accept the changed name by pressing enter.
+
+```bash
+◆  Package name:
+│  testproj
+```
+Accept the package name by pressing enter.
+
+```bash
 
 > Accept testproj
 
 ```bash
-? Select a framework: › - Use arrow-keys. Return to submit.
-❯   Vanilla
-    Vue
-    React
-    Preact
-    Lit
-    Svelte
-    Solid
-    Qwik
-    Others
+◆  Select a framework:
+│  ● Vanilla
+│  ○ Vue
+│  ○ React
+│  ○ Preact
+│  ○ Lit
+│  ○ Svelte
+│  ○ Solid
+│  ...
+└
 ```
 
 > Select vanilla
 
 ```bash
-? Select a variant: › - Use arrow-keys. Return to submit.
-❯   TypeScript
-    JavaScript
+◆  Select a variant:
+│  ● TypeScript
+│  ○ JavaScript
+└
 ```
 
 >Select  typescript
 
 ```bash
-Scaffolding project in /workspaces/babylonDemo24/testProj...
-
-Done. Now run:
+◇  Scaffolding project in /workspaces/BabylonJSdev/testProj...
+│
+└  Done. Now run:
 
   cd testProj
   npm install
@@ -302,9 +320,9 @@ Done. Now run:
 > npm install
 
 ```bash
-added 11 packages, and audited 12 packages in 1m
+added 14 packages, and audited 15 packages in 6s
 
-3 packages are looking for funding
+5 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
@@ -330,9 +348,10 @@ Within the testProj folder is a new package.json file which includes the names o
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "~5.6.2",
-    "vite": "^5.4.9"
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
   }
+}
 ```
 
 Due to changes in the default security settings it is now necessary to add --host to the dev and preview scripts manually thus:
@@ -348,20 +367,21 @@ Due to changes in the default security settings it is now necessary to add --hos
     "preview": "vite preview --host"
   },
   "devDependencies": {
-    "typescript": "~5.6.2",
-    "vite": "^5.4.9"
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
   }
 }
 ```
+You wil need to close and re-open VSC to have the changes take effect.
 
 To test this out the dependancies must be installed by the node package manager.
 
 >npm install
 
 ```bash
-added 1 package, and audited 13 packages in 887ms
+added 1 package, and audited 16 packages in 688ms
 
-3 packages are looking for funding
+5 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
@@ -370,10 +390,10 @@ found 0 vulnerabilities
 >npm run dev
 
 ```bash
-VITE v5.4.10  ready in 417 ms
+  VITE v6.4.1  ready in 592 ms
 
   ➜  Local:   http://localhost:5173/
-  ➜  Network: http://172.17.0.2:5173/
+  ➜  Network: use --host to expose
   ➜  press h + enter to show help
   ```
 

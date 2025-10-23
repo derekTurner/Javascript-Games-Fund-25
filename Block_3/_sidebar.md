@@ -5,17 +5,16 @@
 * [Setup PC](Block_3/section_1c/setup.md)
 * [Typescript , Vite and Node on Docker](Block_3/section_1d_node/devEnv.md)
 * [BabylonJS on Docker](Block_3/section_1e_node/firstBabylon.md)
-<!-- week 6 
+<!-- week 6 -->
 * [Changing Machine](Block_3/section_1f/change.md)
 * [Managing Vite](Block_3/section_1g/vite.md)
-* [Cloud development](Block_3/section_1h/cde.md)--> 
-  <!-- week 7 
-
+* [Cloud development](Block_3/section_1h/cde.md) 
+  <!-- week 6 --> 
 * [Lighting and Shadows](Block_3/section_2a/lighting02.md)
 * [Rotation](Block_3/section_2b/rotation.md)
 * [Frame Animation](Block_3/section_3/frames01.md)
 * [Shapes](Block_3/section_4/shapes01.md)
-* <!-- week 8 
+ <!-- week 8 
 * [Environment](Block_3/section_5/section_5.md)-->
  <!-- week 9 
 * [key Motion](Block_3/section_6/section_6.md)
