@@ -22,11 +22,10 @@
 * [baked Animation](Block_3/section_6/section_6c.md)
 * [collisions](Block_3/section_7collisions/collisions.md)
 * [build havok](Block_3/section_8havok/buildhavok.md) 
-<!-- week 9  -->
-<!-- week 10 
+* [asset manager](Block_3/section_8b/section_8b.md) 
 * [gui](Block_3/section_9gui/section_9a.md)
 
- -->
+
 <!--  
 * [Environment](Block_3/section_5/section_5.md)
 
