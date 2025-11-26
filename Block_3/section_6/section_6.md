@@ -1,14 +1,14 @@
 # Moving a mesh by keyboard action
 
+This section of notes is revised to account for changes to the loader functions and audio engin in BabylonJS 8.
+
 In this section a mesh will be loaded into a simple scene and caused to move across a plane in response to the "AWSD" keys.
 
 As part of the simple environment a .skybox will be addede to the scene.
 
 Audio will be added which can be switched on and off by keypress.
 
-The next step of development will be to cause a mesh to spin in response to a mouse click, and to stop again when the mouse hold is prolonged.
-
-Then the baked in animations of the model will be accessed to simulate walking with motion.
+In sections to follow, the next steps of development will be to cause a mesh to spin in response to a mouse click, and to stop again when the mouse hold is prolonged.  Then the baked in animations of the model will be accessed to simulate walking with motion.
 
 ## Structure
 
@@ -18,15 +18,114 @@ The aim is to separate the code for scene layout from that for scene action and 
 
 The overall folder structure will be:
 
-![structure](images/structure.jpg)
+![structure](images/structure.png)
 
 Assets for babylonjs are available from the [assets library](https://github.com/BabylonJS/Assets) on github.
 
-In the usual way index.html points to index.ts which imports createStartScene and createRunScene functions from their module typescript files createStartscene.ts and createRunScene.ts ccalls the createStartScene and calls these in turn to set up the scene prior to running the render loop.
+In the usual way index.html points to index.ts.
 
-Interface.d.ts defines the interface for the sceneData object providing the common description which will be used across a range of files to access the scene elements.  This file has to be kept in sync with the interface in the createStartScene.ts file.
+**index.html**
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>keyAction</title>
+    </head>
+    <body> </body>
+</html>
+<script type="module" src="./src/index.ts"></script>
+```
 
-The keyActionManager.ts file is a separate file which will be used to manage the keyboard actions.  The functions and global properties are exported to allow them to be accessed from createStartScene.ts and createRunScene.ts.
+
+
+ Then index.ts imports createStartScene and createRunScene functions from their module typescript files createStartscene.ts and createRunScene.ts.  It then calls these in turn to set up the scene prior to running the render loop.
+
+ **index.ts**
+ ```javascript
+ import { Engine} from "@babylonjs/core";
+import createStartScene from "./createStartScene";
+import createRunScene from "./createRunScene";
+import "./main.css";
+
+const CanvasName = "renderCanvas";
+
+let canvas = document.createElement("canvas");
+canvas.id = CanvasName;
+
+canvas.classList.add("background-canvas");
+document.body.appendChild(canvas);
+
+let eng = new Engine(canvas, true, {}, true);
+let startScene = createStartScene(eng);
+createRunScene(startScene);
+
+eng.runRenderLoop(() => {
+  startScene.scene.render();
+});
+```
+Style is brought in from main.css
+
+**main.css**
+```css
+body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#renderCanvas {
+    width: 100%;
+    height: 100%;
+}
+```
+
+Initially createRunScene.ts can be set to do nothing so that it does not interfere with the action of createStartScene.
+
+**createRunScene.ts**
+```javascript
+import {} from "@babylonjs/core";
+
+import { SceneData } from "./interfaces";
+
+export default function createRunScene(runScene: SceneData) {
+ 
+  runScene.scene.onAfterRenderObservable.add(() => {});
+}
+```
+
+
+Interface.d.ts defines the interface for the sceneData object providing the common description which will be used across a range of files to access the scene elements.  This file has to be kept in sync with the interface in the createStartScene.ts file, but for starters can list the basic elements which are in most scenes.
+
+**interfaces.d.ts**
+```javascript
+import {
+  Scene,
+  Mesh,
+  HemisphericLight,
+  Camera,
+} from "@babylonjs/core";
+
+export interface SceneData {
+      scene: Scene;
+      light?: HemisphericLight;
+      ground?: Mesh;
+      camera?: Camera;
+}
+```
+
+The keyActionManager.ts file is a separate file which will be used to manage the keyboard actions.  The functions and global properties are exported to allow them to be accessed from createStartScene.ts and createRunScene.ts.  
+
+This is not being called in the starting setup so can start as and empty file.
+
+**keyActionManager**
+```javascript
+// empty file
+```
+
+This is the basic starting structure.
 
 ## The basic scene
 
