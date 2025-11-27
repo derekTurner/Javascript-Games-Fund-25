@@ -1,6 +1,6 @@
 # Moving a mesh by keyboard action
 
-This section of notes is revised to account for changes to the loader functions and audio engin in BabylonJS 8.
+This section of notes is ```under revision``` to account for changes to the loader functions and audio engin in BabylonJS 8.
 
 In this section a mesh will be loaded into a simple scene and caused to move across a plane in response to the "AWSD" keys.
 

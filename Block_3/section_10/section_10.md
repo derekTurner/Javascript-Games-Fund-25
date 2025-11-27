@@ -1,170 +1,615 @@
 # Multiple scene gui selector
 
-In previous sections, html buttons sitting outside the canvas have been used to select scenes in the canvas.  While tis works, it is not a convenient as having gui elements on the canvas which control the scenes.
+It is often necessary to have multiple scenes in a single application, and this example shows how to do it using the Babylon.js GUI.
 
-This example allows selection between three scenes using gui buttons, but extension to more scenes is straightforward.
+This example allows selection between four simple scenes using gui buttons.  It is relatively easy to change the number of scenes. 
 
-The three scenes presented are contained in **createScene1.js, createScene2.js and createScene3.js** These show three aspects of the motion control of a mesh.
+The four scenes presented are contained in folders scene1, scene2, scene3, and scene4. Each scene has its own folder and contains the necessary files to run the scene.
 
-These scenes have already been described in a previous section and mo modification of the scene is required to use them in this multiscene display.
+The scenes are selected using a gui button. The gui is placed in its own folder which contains the necessary files to run the gui.
 
-* Scene 1: mesh is moved by WASM
-* Scene 2: mesh is rotated by mouse click and stopped by mouse long click.
-* Scene 3: waliing animation is enabled.
+![structure](images/structure.png)
 
-The canvas will be hosted in the **index.html** page.  The page must include a link to the babylon gui but otherwise there is nothing new here.
+Along side the src folder is the assets folder which contains the necessary assets for the scenes.  In this example the assets are kept simple and only a texture is used from the babylonJS assets library.   
 
+![assets](images/assets.png)
+
+## Four basic scenes
+
+For this example the scenes 1-4 are kept simple, just a few basic elements sufficient to identify different scenes. 
+
+**scene1/createStartScene**
+```javascript
+// import "@babylonjs/core/Debug/debugLayer";
+// import "@babylonjs/inspector";
+import {
+    Scene,
+    ArcRotateCamera,
+    Vector3,
+    HemisphericLight,
+    MeshBuilder,
+    Mesh,
+    Light,
+    Camera,
+    Engine,
+  } from "@babylonjs/core";
+  
+  
+  function createBox(scene: Scene) {
+    let box = MeshBuilder.CreateBox("box",{size: 1}, scene);
+    box.position.y = 3;
+    return box;
+  }
+
+  
+  function createLight(scene: Scene) {
+    const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+    return light;
+  }
+  
+  function createSphere(scene: Scene) {
+    let sphere = MeshBuilder.CreateSphere(
+      "sphere",
+      { diameter: 2, segments: 32 },
+      scene,
+    );
+    sphere.position.y = 1;
+    return sphere;
+  }
+  
+  function createGround(scene: Scene) {
+    let ground = MeshBuilder.CreateGround(
+      "ground",
+      { width: 6, height: 6 },
+      scene,
+    );
+    return ground;
+  }
+  
+  function createArcRotateCamera(scene: Scene) {
+    let camAlpha = -Math.PI / 2,
+      camBeta = Math.PI / 2.5,
+      camDist = 10,
+      camTarget = new Vector3(0, 0, 0);
+    let camera = new ArcRotateCamera(
+      "camera1",
+      camAlpha,
+      camBeta,
+      camDist,
+      camTarget,
+      scene,
+    );
+    camera.attachControl(true);
+    return camera;
+  }
+  
+  export default function createStartScene(engine: Engine) {
+    interface SceneData {
+      scene: Scene;
+      box?: Mesh;
+      light?: Light;
+      sphere?: Mesh;
+      ground?: Mesh;
+      camera?: Camera;
+    }
+  
+    let that: SceneData = { scene: new Scene(engine) };
+    // that.scene.debugLayer.show();
+  
+    that.box = createBox(that.scene);
+    that.light = createLight(that.scene);
+    that.sphere = createSphere(that.scene);
+    that.ground = createGround(that.scene);
+    that.camera = createArcRotateCamera(that.scene);
+    return that;
+  }
+```
+
+**scene2/createStartScene**
+```javascript
+// import "@babylonjs/core/Debug/debugLayer";
+// import "@babylonjs/inspector";
+import {
+    Scene,
+    ArcRotateCamera,
+    Vector3,
+    HemisphericLight,
+    MeshBuilder,
+    Mesh,
+    Light,
+    Camera,
+    Engine,
+    StandardMaterial,
+    Texture,
+    Color3
+  } from "@babylonjs/core";
+  
+  
+  function createCylinder(scene: Scene) {
+    let cylinder = MeshBuilder.CreateCylinder(
+      "cylinder",
+      { height: 1, diameter: 0.7 },
+      scene
+    );
+    cylinder.position.x = 1;
+    cylinder.position.y = 1;
+    cylinder.position.z = 1;
+  
+    var texture = new StandardMaterial("reflective", scene);
+    texture.ambientTexture = new Texture("./assets/reflectivity.png", scene);
+    texture.diffuseColor = new Color3(1, 1, 1);
+    cylinder.material = texture;
+    return cylinder;
+  }
+
+  
+  function createLight(scene: Scene) {
+    const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+    return light;
+  }
+  
+  function createSphere(scene: Scene) {
+    let sphere = MeshBuilder.CreateSphere(
+      "sphere",
+      { diameter: 2, segments: 32 },
+      scene,
+    );
+    sphere.position.y = 1;
+    return sphere;
+  }
+  
+  function createGround(scene: Scene) {
+    let ground = MeshBuilder.CreateGround(
+      "ground",
+      { width: 6, height: 6 },
+      scene,
+    );
+    return ground;
+  }
+  
+  function createArcRotateCamera(scene: Scene) {
+    let camAlpha = -Math.PI / 2,
+      camBeta = Math.PI / 2.5,
+      camDist = 10,
+      camTarget = new Vector3(0, 0, 0);
+    let camera = new ArcRotateCamera(
+      "camera1",
+      camAlpha,
+      camBeta,
+      camDist,
+      camTarget,
+      scene,
+    );
+    camera.attachControl(true);
+    return camera;
+  }
+  
+  export default function createStartScene(engine: Engine) {
+    interface SceneData {
+      scene: Scene;
+      cylinder?: Mesh;
+      light?: Light;
+      sphere?: Mesh;
+      ground?: Mesh;
+      camera?: Camera;
+    }
+  
+    let that: SceneData = { scene: new Scene(engine) };
+    // that.scene.debugLayer.show();
+  
+    that.cylinder = createCylinder(that.scene);
+    that.light = createLight(that.scene);
+    that.sphere = createSphere(that.scene);
+    that.ground = createGround(that.scene);
+    that.camera = createArcRotateCamera(that.scene);
+    return that;
+  }
+```
+
+**scene3/createStartScene**
+```javascript
+// import "@babylonjs/core/Debug/debugLayer";
+// import "@babylonjs/inspector";
+import {
+    Scene,
+    ArcRotateCamera,
+    Vector3,
+    HemisphericLight,
+    MeshBuilder,
+    Mesh,
+    Light,
+    Camera,
+    Engine,
+    Texture,
+    StandardMaterial,
+    Color3
+  } from "@babylonjs/core";
+  
+  
+  function createTorus(scene: Scene) {
+    let torus = MeshBuilder.CreateTorus(
+      "torus",
+      { diameter: 0.7, thickness: 0.6, tessellation: 10 },
+      scene
+    );
+    torus.position.x = -1;
+    torus.position.y = 2;
+    torus.position.z = 1;
+  
+    var texture = new StandardMaterial("reflective", scene);
+    texture.ambientTexture = new Texture("./assets/reflectivity.png", scene);
+    texture.diffuseColor = new Color3(1, 1, 1);
+    torus.material = texture;
+
+    return torus;
+  }
+
+  
+  function createLight(scene: Scene) {
+    const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+    return light;
+  }
+  
+  function createSphere(scene: Scene) {
+    let sphere = MeshBuilder.CreateSphere(
+      "sphere",
+      { diameter: 2, segments: 32 },
+      scene,
+    );
+    sphere.position.y = 1;
+    return sphere;
+  }
+  
+  function createGround(scene: Scene) {
+    let ground = MeshBuilder.CreateGround(
+      "ground",
+      { width: 6, height: 6 },
+      scene,
+    );
+    return ground;
+  }
+  
+  function createArcRotateCamera(scene: Scene) {
+    let camAlpha = -Math.PI / 2,
+      camBeta = Math.PI / 2.5,
+      camDist = 10,
+      camTarget = new Vector3(0, 0, 0);
+    let camera = new ArcRotateCamera(
+      "camera1",
+      camAlpha,
+      camBeta,
+      camDist,
+      camTarget,
+      scene,
+    );
+    camera.attachControl(true);
+    return camera;
+  }
+  
+  export default function createStartScene(engine: Engine) {
+    interface SceneData {
+      scene: Scene;
+      torus?: Mesh;
+      light?: Light;
+      sphere?: Mesh;
+      ground?: Mesh;
+      camera?: Camera;
+    }
+  
+    let that: SceneData = { scene: new Scene(engine) };
+    // that.scene.debugLayer.show();
+  
+    that.torus = createTorus(that.scene);
+    that.light = createLight(that.scene);
+    that.sphere = createSphere(that.scene);
+    that.ground = createGround(that.scene);
+    that.camera = createArcRotateCamera(that.scene);
+    return that;
+  }
+```
+
+**scene4/createStartScene**
+```javascript
+// import "@babylonjs/core/Debug/debugLayer";
+// import "@babylonjs/inspector";
+import {
+    Scene,
+    ArcRotateCamera,
+    Vector3,
+    HemisphericLight,
+    MeshBuilder,
+    Mesh,
+    Light,
+    Camera,
+    Engine,
+    Texture,
+    StandardMaterial,
+    Color3
+  } from "@babylonjs/core";
+  
+  
+  function createTube(scene: Scene) {
+    const myPath = [
+      new Vector3(1.85, 0.85, 0.85),
+      new Vector3(1.35, 0.35, 0.35),
+    ];
+  
+    const tube = MeshBuilder.CreateTube(
+      "tube",
+      { path: myPath, radius: 0.4, sideOrientation: Mesh.DOUBLESIDE },
+      scene
+    );
+  
+    var texture = new StandardMaterial("reflective", scene);
+    texture.ambientTexture = new Texture("./assets/reflectivity.png", scene);
+    texture.diffuseColor = new Color3(1, 1, 1);
+    tube.material = texture;
+    return tube;
+  }
+
+  
+  function createLight(scene: Scene) {
+    const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+    return light;
+  }
+  
+  function createSphere(scene: Scene) {
+    let sphere = MeshBuilder.CreateSphere(
+      "sphere",
+      { diameter: 2, segments: 32 },
+      scene,
+    );
+    sphere.position.y = 1;
+    return sphere;
+  }
+  
+  function createGround(scene: Scene) {
+    let ground = MeshBuilder.CreateGround(
+      "ground",
+      { width: 6, height: 6 },
+      scene,
+    );
+    return ground;
+  }
+  
+  function createArcRotateCamera(scene: Scene) {
+    let camAlpha = -Math.PI / 2,
+      camBeta = Math.PI / 2.5,
+      camDist = 10,
+      camTarget = new Vector3(0, 0, 0);
+    let camera = new ArcRotateCamera(
+      "camera1",
+      camAlpha,
+      camBeta,
+      camDist,
+      camTarget,
+      scene,
+    );
+    camera.attachControl(true);
+    return camera;
+  }
+  
+  export default function createStartScene(engine: Engine) {
+    interface SceneData {
+      scene: Scene;
+      tube?: Mesh;
+      light?: Light;
+      sphere?: Mesh;
+      ground?: Mesh;
+      camera?: Camera;
+    }
+  
+    let that: SceneData = { scene: new Scene(engine) };
+    // that.scene.debugLayer.show();
+  
+    that.tube = createTube(that.scene);
+    that.light = createLight(that.scene);
+    that.sphere = createSphere(that.scene);
+    that.ground = createGround(that.scene);
+    that.camera = createArcRotateCamera(that.scene);
+    return that;
+  }
+```
+
+## The Gui
+
+The Gui is a separate scene that is rendered on top of the main scene. It is used to display the controls for the main scene.
+
+The first items in guiScene.js are the imports.  These include a setSceneIndex function which has not been written yet, but will be used to switch between scenes.
+
+The Sound elements in this scene have been temporarily removed as they relate to the previous sound engine which is no longer in use.
+
+**guiScene.js (extract)**
+```javascript
+import setSceneIndex from "./../index";
+
+import {
+    Scene,
+    ArcRotateCamera,
+    Vector3,
+    Camera,
+    Engine,
+  
+    Sound
+  } from "@babylonjs/core";
+  import * as GUI from "@babylonjs/gui";
+ 
+  //----------------------------------------------------
+  ```
+
+  The function createSceneButton is used to create labelled buttons on the gui.  The text for display is passed as a string parameter and button is placed on the advanced dynamic texture.
+
+  The button action is provided by adding an onPointerUpObservable function which will act when the mouse button is released over the button.  This calls the imported setSceneIndex function to change the scene.  Note that the setSceneIndex function is called with the index -1 because the scenes are 0 based.
+
+**guiScene.js (extract)**
+```javascript
+  function createSceneButton(scene: Scene, name: string, note: string, index: number, x: string, y: string, advtex: GUI.AdvancedDynamicTexture) {
+    let button = GUI.Button.CreateSimpleButton(name, note);
+        button.left = x;
+        button.top = y;
+        button.width = "80px";
+        button.height = "30px";
+        button.color = "white";
+        button.cornerRadius = 20;
+        button.background = "purple";
+
+
+        button.onPointerUpObservable.add(function() {
+            console.log("THE BUTTON HAS BEEN CLICKED");
+            setSceneIndex(index -1);
+        });
+        advtex.addControl(button);
+        return button;
+ }
+ ``` 
+
+The guiScene needs a camera to be created and added to the scene.  This camera is used to render the gui scene and is not used for the main scene.  The camera is set up to be a static camera and does not need controls added.  The camera is added to the scene with the attachControl function set to false so that it does not respond to mouse or touch events.
+
+Each of the scenes has an independent camera so changing the scene view will restore the position of the camera to the position it was in when the scene last displayed.
+
+**guiScene.js (extract)**
+```javascript
+ function createArcRotateCamera(scene: Scene) {
+  let camAlpha = -Math.PI / 2,
+    camBeta = Math.PI / 2.5,
+    camDist = 10,
+    camTarget = new Vector3(0, 0, 0);
+  let camera = new ArcRotateCamera(
+    "camera1",
+    camAlpha,
+    camBeta,
+    camDist,
+    camTarget,
+    scene,
+  );
+  camera.attachControl(false);
+  return camera;
+}
+```
+
+The guiScene is created by calling the menuScene function which is the default export of the guiScene.js file.
+
+**guiScene.js(extract)**
+```javascript
+  export default function menuScene(engine: Engine) {
+    interface SceneData {
+      scene: Scene;
+      advancedTexture: GUI.AdvancedDynamicTexture;
+      button1: GUI.Button;
+      button2: GUI.Button;
+      button3: GUI.Button;
+      button4: GUI.Button;
+      camera: Camera;
+    }
+  
+    let scene = new Scene(engine);
+    let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI", true);
+    var button1 = createSceneButton(scene,"but1", "1",1,"-150px", "120px", advancedTexture);
+    var button2 = createSceneButton(scene,"but2", "2", 2,"-50px", "120px", advancedTexture);
+    var button3 = createSceneButton(scene,"but3", "3",3,"50px", "120px", advancedTexture);
+    var button4 = createSceneButton(scene,"but4", "4", 4,"150px", "120px", advancedTexture);
+    var camera = createArcRotateCamera(scene);
+
+ 
+    let that: SceneData = {
+      scene,
+      advancedTexture,
+      button1,
+      button2,
+      button3,
+      button4,
+      camera
+    };
+    
+    return that;
+  } 
+```
+
+## Other files
+
+The **index.html** file is linked to **index.js** in the normal way and only needs a title change for use.
+
+**index.html**
 ```html
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Motion with animations</title>
-        <!--External CSS file-->
-        <link rel="stylesheet" href="CSS/main.css" />
-        <!--BabylonJS Libraries-->
-        <!-- <script src="https://cdn.babylonjs.com/babylon.js"></script> 
-        <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
-        <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
-        <script src="https://preview.babylonjs.com/ammo.js"></script>
-        <script src="https://preview.babylonjs.com/cannon.js"></script>
-        <script src="https://preview.babylonjs.com/Oimo.js"></script>
-        <script src="https://preview.babylonjs.com/earcut.min.js"></script>
-        <script src="https://preview.babylonjs.com/babylon.js"></script>
-        <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-        <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-        <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
-        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-        <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-        <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
-        <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
-        <!--External Files-->
+        <meta charset="UTF-8">
+        <title>Multiple Scenes</title>
     </head>
-
-    <body>
-        <div></div>
-    </body>
+    <body> </body>
 </html>
-
-<script type="module" src="JS/index.js"></script>
-
+<script type="module" src="./src/index.ts"></script>
 ```
+The **index.js** file is the entry point for the application. It is responsible for creating the canvas and engine, and then calling the setSceneIndex() function to choose the initial screen to display.  Index.js acs as an aggregator page to draw the scenes and gui together and render them.
 
-The **index.html** file is linked to **index.js** which is an aggregator page to draw the scenes and gui together and render them.
 
-This imports the scene related elements from other modules.
-Note that **guiscene.js** contains a single default export of "guiScene, and that can be imported simply.  However createScenes.js has several export statements on various elements so the import line must list each of these required within {} braces.
+This imports the scene related elements from other modules, including the stylesheet in main,css.
 
-The setSceneIndex(0) function call chooses the initial screen to display.
+The canvas is created and appended to the document body.
 
-The gui scene is then returned by guiScene(engine) and both the main scene and the gui scene are included in the render loop with the gui scene appearing over the top of the main scene.
+The scenes are added into an array of scenes.
 
+The current scene is set to scenes[0] and the setSceneIndes is set to 0.
+
+The setSceneIndex function is exported so that it can be called from within the guiScene.js file to change the scene when a button is pressed.
+
+As the gui scene is made up buttons are added with labels 1,2,3, but the call to the scenes array is adjusted to use index 0,1,2.
+
+**index.ts**
 ```javascript
-import guiScene  from "./guiScene.js";
-import {scenes, scene, engine, setSceneIndex}  from "./createScenes.js";
-
-setSceneIndex(0);
-
-let gui = guiScene(engine);
-gui.autoClear = false;
-engine.runRenderLoop(() => {
-    scene.render();
-    gui.render();
-});
-```
-
-The **createScenes.js** file imports the selected scenes and establishes the canvas and engine.
-
-The imported createScene functions are used to populate an array of scenes and to set the initial scene.
-
-The `setSceneIndex()` function is exported to provide a way for code in other modules to alter the private variables within this module and thereby alter the scene which is being rendered.
-
-```javascript
-import createScene1  from "./createScene1.js";
-import createScene2  from "./createScene2.js";
-import createScene3  from "./createScene3.js";
+import { Engine} from "@babylonjs/core";
+import createScene1  from "./scene1/createStartScene";
+import createScene2  from "./scene2/createStartScene";
+import createScene3  from "./scene3/createStartScene";
+import createScene4  from "./scene4/createStartScene";
+import menuScene from "./gui/guiScene";
+import "./main.css";
 
 const CanvasName = "renderCanvas";
 
 let canvas = document.createElement("canvas");
 canvas.id = CanvasName;
 
-canvas.classList.add("renderCanvas");
+canvas.classList.add("background-canvas");
 document.body.appendChild(canvas);
 
-export let scene
-export let scenes = [];
+let scene;
+let scenes: any[] = [];
 
-export let engine = new BABYLON.Engine(canvas, true, null, true);
-
-scenes[0] = createScene1(engine);
-scenes[1] = createScene2(engine);
-scenes[2] = createScene3(engine);
+let eng = new Engine(canvas, true, {}, true);
+let gui = menuScene(eng);
+scenes[0] = createScene1(eng);
+scenes[1] = createScene2(eng);
+scenes[2] = createScene3(eng);
+scenes[3] = createScene4(eng);
 scene = scenes[0].scene;
+setSceneIndex(0);
 
-export function setSceneIndex(i){
-    scene = scenes[i].scene;
-}
+export default function setSceneIndex(i: number) {
+  eng.runRenderLoop(() => {
+      scenes[i].scene.render();
+      gui.scene.autoClear = false;
+      gui.scene.render();
+  });
+}   
 ```
 
-The gui scene itself is set up in **guiScene.js**.  This is relatively simple comprising only three buttons.
-
-The code to create a button has been taken into a `createSceneButton()` function to cut down on code repetition.  This uses the `BABYLON.GUI.Button.CreateSimpleButton()` function to create a button and then the `onPointerUpObservable` property has a function added to it which will use the imported `setSceneIndex()` function to update the scene.
-
-In order for the gui to cover the whole screen a `BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI()` function is used and the resulting advanced texture is passed as a parameter to the `createSceneButton()` function so that buttons will appear on this texture.
-
-Because the gui scene is quite separate to the main scene it needs its own camera to make the buttons visible.  This is a static camera so does not need controls added.
-
-As the gui scene is made up buttons are added with labels 1,2,3, but the call to the scenes array is adjested to use index 0,1,2.
-
-Fhe full listing of **guiScene.js** is:
-
-```javascript
-import {setSceneIndex}        from "./createScenes.js";
-
-function createSceneButton(name, index, x,y, advtex){
-    var button = BABYLON.GUI.Button.CreateSimpleButton(name, index);
-        button.left = x;
-        button.top  =  y;
-        button.width = "80px"
-        button.height = "30px";
-        button.color = "white";
-        button.cornerRadius = 20;
-        button.background = "green";
-        button.onPointerUpObservable.add(function() {
-            setSceneIndex(index - 1);
-        });
-        advtex.addControl(button); 
-        return button;
-}
-
-export default function guiScene(engine) {
-    var guiScene = new BABYLON.Scene(engine);
-
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, BABYLON.Vector3.Zero(), guiScene);
-
-    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI",true);
-
-    var button1 = createSceneButton("but1", 1,"-100px", "120px", advancedTexture);
-    var button2 = createSceneButton("but2", 2,"000px", "120px", advancedTexture);
-    var button3 = createSceneButton("but3", 3,"100px", "120px", advancedTexture);
-     
-    //guiScene.debugLayer.show();
-    return guiScene;
-}    
-```
+## Running the example
 
 This will appear on the browser as:
 
-The result is that the character can be moved by the usual keys.  Try pressing "w" and "a" for diagonal motion.
 
 <iframe 
     height="350" 
     width="100%" 
     scrolling="no" 
     title="Gui scenes selector" 
-    src="Block_3/section_10/ex_01_gui_scenes/index.html" 
+    src="Block_3/section_10/multiBuild/index.html" 
     frameborder="no" 
     loading="lazy" 
     allowtransparency="true" 

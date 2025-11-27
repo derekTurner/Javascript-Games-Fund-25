@@ -25,12 +25,7 @@
 * [asset manager](Block_3/section_8b/section_8b.md) 
 * [gui](Block_3/section_9gui/section_9a.md)
 
-
-<!--  
-* [Environment](Block_3/section_5/section_5.md)
-
-
--->
+* [Multiple scene gui selector](Block_3/section_10/section_10.md)
 
 <hr/>
 
