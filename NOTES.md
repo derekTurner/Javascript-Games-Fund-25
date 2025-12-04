@@ -11,3 +11,8 @@ The repositories actively used are:
   - Examples worked through during class sessions.
 - [BabylonJSdemo25]()
   - My reference for completed exercises which can be referenced in generating the class demonstrations
+
+
+  Build elements
+
+  element 1 - shapes motion lighting texture 
