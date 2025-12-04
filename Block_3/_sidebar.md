@@ -26,7 +26,7 @@
 * [gui](Block_3/section_9gui/section_9a.md)
 
 * [Multiple scene gui selector](Block_3/section_10/section_10.md)
-
+* [Errata](Block_3/errata/errata.md)
 <hr/>
 
 <!-- 
