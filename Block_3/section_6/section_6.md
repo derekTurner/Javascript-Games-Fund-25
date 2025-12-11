@@ -152,9 +152,13 @@ import {
   Sound
 } from "@babylonjs/core";
 ```
-Backgrouond music is added from an audio file stored in the assets folder.  This is set with autoplay initally true.  However browsers prevent pop up windows from launching audio so babylon provides a system which will start the audio only after the application window has been clicked.  This uses the audio engine custom unlocked button.  When a window event corresponding to a click happens the audio will be enabled.  This window event only needs to happen onece, after the first click the browser is happy to play audio.
 
-**createStartScene.ts**
+The audio engine has been modified in BabylonJS version 8 and the old one should no longer be used.  The new audio engine is more efficient and has better support for different audio formats.
+The function backgroundMusic listed below is based on the old format audio engin and should no longer be used.  It is kept here for reference, but should not be added to code.  All refereces to the old audio engine should be commented out.
+
+***Background music is added from an audio file stored in the assets folder.  This is set with autoplay initally true.  However browsers prevent pop up windows from launching audio so babylon provides a system which will start the audio only after the application window has been clicked.  This uses the audio engine custom unlocked button.  When a window event corresponding to a click happens the audio will be enabled.  This window event only needs to happen onece, after the first click the browser is happy to play audio.***
+
+**createStartScene.ts (extract - old format music do not use)**
 ```javascript
 function backgroundMusic(scene: Scene): Sound{
   let music = new Sound("music", "./assets/audio/arcade-kid.mp3", scene,  null ,
@@ -252,6 +256,10 @@ function createArcRotateCamera(scene: Scene) {
   return camera;
 }
 ```
+
+`This code imports a mesh using the old SceneLoader this has been replaced in BayblonJS version 8 with a new method.  However the old method is still supported for compatibility so this is still a valid way to import a mesh.  In a subsequent section of these notes the new asset manager will be introduced, but for now we will use the old sceneLoader.`
+
+
 A mesh is imported from a file in .babylon format.  Other mesh formats can be used, but the .babylon format is reliable.  Some other formats need work arounds to use them effectively.
 
 The process of loading a model is asynchonous.   The programme has moved on before the loading is complete.
@@ -290,7 +298,7 @@ Call the functions which create the scene and add them to the that object.
 ```javascript
 export default function createStartScene(engine: Engine) {
   let scene = new Scene(engine);
-  let audio = backgroundMusic(scene);
+  //let audio = backgroundMusic(scene);
   let lightHemispheric = createHemisphericLight(scene);
   let camera = createArcRotateCamera(scene);
   let player = importMeshA(scene, 0, 0);
@@ -298,7 +306,7 @@ export default function createStartScene(engine: Engine) {
 
   let that: SceneData = {
     scene,
-    audio,
+    //audio,
     lightHemispheric,
     camera,
     player,
@@ -314,7 +322,7 @@ Now the details of **interface.d.ts** must exactly match the details of SceneDat
 ```javascript
 import {
   Scene,
-  Sound,
+  //Sound,
   Mesh,
   HemisphericLight,
   Camera,
@@ -323,7 +331,7 @@ import {
 
 export interface SceneData {
   scene: Scene;
-  audio: Sound;
+  //audio: Sound;
   lightHemispheric: HemisphericLight;
   camera: Camera;
   player: Promise<void | ISceneLoaderAsyncResult>;
@@ -403,31 +411,7 @@ You will see that the .env file represents a cube texture to be loaded into the 
     0.1
   );
 ```
-The audio which was added to the scene becomes active when the scene window is clicked.  This can be initially stopped.  Then by adding code to the onBeforeRenderObservable the state of the keypresses can be tested at the frame rate.
 
-I want to press the "m" key to toggle the music between playing and being stopped.  I want to avoid the music being turned on and off at the frame rate while ever the "m" key is pressed.  
-
-On the first frame when a key is pressed the value returned from getKeyDown will be 1 and the code will respond with the required action.
-
-The keyDownHeld function will caus the getKeyDown to return a value of 2 until the key is released and this will prevent repeated audio switching while the key is held down.
-
-Upon key release the getKeyDown() function will return 0.
-
-**createRunScene.ts**
-```javascript
-  runScene.audio.stop();
-  runScene.scene.onBeforeRenderObservable.add(() => {
-    // check and respond to keypad presses
-
-    if (getKeyDown() == 1 && (keyDownMap["m"] || keyDownMap["M"])) {
-      keyDownHeld();
-      if (runScene.audio.isPlaying) {
-        runScene.audio.stop();
-      } else {
-        runScene.audio.play();
-      }
-    }
-```
 To address the position and rotation of the mesh under keyboard control the promise which is represented by the player variable must be resolved using and anonymous function responding to the status of .then.  If you are not comfortable with this, check up notes on javascript pormises.
 
 The character should continue to move while ever a key is held down and so it is only necessary to look at the keyDownMap array and getKeyDown() does not need to be tested.
@@ -458,6 +442,8 @@ The character will respond to "wasm" and arrow keys.
   });
 
 ```
+
+*Typescript will underline the "w" and other strings here as errors as it does not expect the array index to be a string.  However at runtime this will work correctly as javascript allows string indexes for arrays.  So you can ignore the typescript warning here.*
 
 That concludes the onBeforeRenderObservable section.  There is also an AfterRenderObservable which could be used to drive code at the frame rate.  An empty stub of code is left so that this could be used if required.
 

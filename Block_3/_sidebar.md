@@ -16,7 +16,6 @@
 * [Shapes](Block_3/section_4/shapes01.md)
  <!-- week 8 -->
 * [Environment](Block_3/section_5/section_5.md)
- 
 * [key Motion](Block_3/section_6/section_6.md)
 * [pick Motion](Block_3/section_6/section_6b.md)
 * [baked Animation](Block_3/section_6/section_6c.md)
@@ -24,7 +23,6 @@
 * [build havok](Block_3/section_8havok/buildhavok.md) 
 * [asset manager](Block_3/section_8b/section_8b.md) 
 * [gui](Block_3/section_9gui/section_9a.md)
-
 * [Multiple scene gui selector](Block_3/section_10/section_10.md)
 * [Errata](Block_3/errata/errata.md)
 <hr/>
@@ -56,3 +54,5 @@ Dont use these pages
 * [Basics](Block_3/section_1/html5_intro.md)
 * [Refactor Basics](Block_3/section_1b/refactor.md)
 ->
+* <!-- week 13 -->
+* [Multiple scenes with Physics](Block_3/section_11/multiHavok.md)
