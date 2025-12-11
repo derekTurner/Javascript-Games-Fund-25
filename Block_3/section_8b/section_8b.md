@@ -5,9 +5,83 @@ This section is roughed out to allow you to get access to newly developed code I
 
 ## Player01
 
-Use the asset manager to place trees onto a scene as gltf.  Clone some of these.
+Use the [asset manager(https://doc.babylonjs.com/features/featuresDeepDive/importers/assetManager/)] to place trees onto a scene as gltf.  Clone some of these.
 
-** createStartScene **
+This needs the glTF loader to be imported to handle glTF2.0 format models.
+
+A function addAssets within createStartScene creates and returns an assets manager for the scene.  Items are added to this through the assetsManager.addMeshTask function.  So in this example, tree1 is not a model but is a MeshAssetTask.
+
+The [AddMeshTask function](https://doc.babylonjs.com/typedoc/classes/BABYLON.AssetsManager#addmeshtask) takes a list of mandatory parameters: taskName, meshesName, rootUrl,sceneFilename.  There are also optional parameter which may be added including: extension, filename and pluginOptions.
+
+One of the glTF options controls the start mode to determine which, if any, of the built in animations will run when the model is loaded.  Another option is the GLTFLoaderCoordinateSystemMode.  If not included this defaults to Auto mode in which it will automatically confert the glTF if it is based on a right handed coordinate stystem into the coordinate stystem mode of the scene.  This is a significant improvement on the older file loading system where models having a mismatched coordinate system could fall through the ground and dissapear.
+
+The glTF files may be compressed by codecs which include KHR_mesh_draco_compression there are a range of extension options which relate to this.  So the loading of glTF files may sometimes need additional details.
+
+The meshesName defines the name of meshes to load and may be left blank to load whatever meshes are in a particular package.
+
+The plugin options in detail offer options for different file formats including bvh, gltf, obj, splat and stl.  
+
+The [MeshAssetsTask](https://doc.babylonjs.com/typedoc/classes/BABYLON.MeshAssetTask) has a number of properties which include onSucess and onError.  These will be set to functions which will be called when the task succeeds of fails.  The MeshAssetTask is passed into the function as ```task```.
+
+Within this callback function the task properties such as loadedMeshes can be manipulated.  loadedMeshes[0] is the root mesh which can be positioned and scaled.
+
+The root mesh can also be cloned to form an <AbstractMesh>
+
+The assetsManager.onTaskEfforObservable is used to pass back messages if any of the tasks leads to an error condition.
+
+The addAssets function returns the assetsManager
+
+** player01/createStartScene (extract)**
+```javascript
+function addAssets(scene: Scene) {
+  // add assets here
+  const assetsManager = new AssetsManager(scene);
+  const tree1:MeshAssetTask = assetsManager.addMeshTask(
+    "tree1 task",
+    "",
+    "./assets/nature/gltf/",
+    "CommonTree_1.gltf"
+  );
+  tree1.onSuccess = function (task) {
+    task.loadedMeshes[0].position = new Vector3(3, 0, 2);
+    task.loadedMeshes[0].scaling = new Vector3(0.5, 0.5, 0.5);
+        // Clone tree1
+    const tree1Clone = task.loadedMeshes[0].clone("tree1_clone", null);
+    tree1Clone!.position = new Vector3(0, 0, 5);
+  };
+
+ //  ...
+
+  assetsManager.onTaskErrorObservable.add(function (task) {
+    console.log(
+      "task failed",
+      task.errorObject.message,
+      task.errorObject.exception
+    );
+  });
+  return assetsManager;
+}
+```
+
+The tasks which have been added to the assetsManager are executed by the load() method.
+
+** player01/createStartScene (extract)**
+```javascript
+   let that: SceneData = { scene: new Scene(engine) };
+  //that.scene.debugLayer.show();
+
+  that.light = createLight(that.scene);
+  that.ground = createGround(that.scene);
+  that.camera = createArcRotateCamera(that.scene);
+  const assetsManager = addAssets(that.scene);
+  assetsManager.load();
+```
+
+The other components of the scene are standard so the full listing of createStartScene is:
+
+
+
+** player01/createStartScene **
 ```javascript
 //import "@babylonjs/core/Debug/debugLayer";
 //import "@babylonjs/inspector";
